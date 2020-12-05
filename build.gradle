@@ -1,0 +1,36 @@
+plugins {
+  id 'java'
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+group 'us.jcedeno'
+version '0.1-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+javafx {
+    version = "11"
+    modules = [ 'javafx.controls' ]
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
+}
+
+mainClassName = 'us.jcedeno.college.aj.Main'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'us.jcedeno.college.aj.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
